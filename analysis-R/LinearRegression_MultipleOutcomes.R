@@ -16,7 +16,7 @@ library(flextable)
 
 
 # Load the data
-data <- read.csv("path/to/your/analysis/file/.csv")
+data <- read.csv("path/to/your/analysis/file/.csv") # Specify .csv file here
 
 # Convert neurocognitive task columns to numeric
 # Since my DVs are continuous variable, z-score (mean-centering) is required
@@ -51,13 +51,15 @@ data %>% summarise_all(~ sum(is.na(.)))
 # Function to perform multiple imputation and regression analysis
 perform_regression <- function(outcome_variable) {
   print(outcome_variable)
-  formula <- as.formula(paste(outcome_variable, "~ IV + Covariate_1 + Covariate_2 + ..."))
+  # Edit the formula according to your need
+  formula <- as.formula(paste(outcome_variable, "~ IV + Covariate_1 + Covariate_2 + ...")) 
   lm_result <- lm(formula, data = data)
   tbl_regression(lm_result, exponentiate = FALSE) %>% bold_labels() %>% bold_p()
 }
 
 
 # Loop over outcome variables, perform regression analysis, and merge tables
+# Specify the outcome variables here
 outcome_variables <- c("Visuospatial", "Attention", "Language", "Memory","Composite_Score")
 merged_tables <- list()
 
@@ -72,7 +74,7 @@ merged_tbl <- tbl_merge(tbls = merged_tables,
                                         "**Attention**",
                                         "**Language**",
                                         "**Memory**",
-                                        "**Composite**"))
+                                        "**Composite**")) # Make sure the order is same as the outcome_variables 
 
 
 # Save merged table to Word document
